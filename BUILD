@@ -9,7 +9,8 @@ cc_library(
     './include',
   ],
   defs = [
-    'LEVELDB_PLATFORM_POSIX'
+    'LEVELDB_PLATFORM_POSIX',
+    'SNAPPY',
   ],
   srcs = [
     'db/builder.cc',
@@ -56,5 +57,6 @@ cc_library(
   ],
   deps = [
     '#pthread',
+    '//snappy:snappy'
   ]
 )
