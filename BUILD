@@ -1,3 +1,10 @@
+config_setting(
+  name = 'darwin',
+  values = {
+    'cpu': 'darwin',
+  }
+)
+
 cc_library(
   name = 'leveldb',
   visibility = ['//visibility:public'],
@@ -5,10 +12,17 @@ cc_library(
     '.',
     './include',
   ],
-  defines = [
-    'LEVELDB_PLATFORM_POSIX',
-    'SNAPPY',
-  ],
+  defines = select({
+    'darwin': [
+      'LEVELDB_PLATFORM_POSIX',
+      'SNAPPY',
+      'OS_MACOSX',
+    ],
+    '//conditions:default': [
+      'LEVELDB_PLATFORM_POSIX',
+      'SNAPPY',
+    ],
+  }),
   srcs = [
     'db/builder.cc',
     'db/c.cc',
